@@ -15,12 +15,13 @@ class MessageTemplateCode(models.TextChoices):
 
 class MessageTemplate(models.Model):
     code = models.CharField(max_length=20, choices=MessageTemplateCode.choices)
-    file_name = models.CharField(max_length=100, null=False, blank=False)
-    name = models.CharField(max_length=50, null=False, blank=False)
-    subject = models.CharField(max_length=100, null=False, blank=False)
-    content = models.TextField(null=False, blank=False)
-    createdAt = models.DateTimeField(auto_now_add=True)
-    updatedAt = models.DateTimeField(auto_now=True)
+    file_name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
+    subject = models.CharField(max_length=100)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "MessageTemplate"
+        ordering = ['created_at']

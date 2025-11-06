@@ -62,7 +62,8 @@ EMAIL_PORT = int(os.getenv('MAIL_PORT', 587))
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('MAIL_USERNAME')
 EMAIL_HOST_PASSWORD = os.getenv('MAIL_PASSWORD')
-DEFAULT_FROM_EMAIL = 'noreply@myce.live'
+EMAIL_FROM = os.getenv('MAIL_FROM') or 'noreply@myce.live'
+SITE_URL = os.getenv('SITE_URL')
 
 ROOT_URLCONF = 'config.urls'
 

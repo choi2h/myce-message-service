@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('message-template/', include('apps.templates.urls')),
+    path('senders/', include('apps.senders.urls')),
 ]

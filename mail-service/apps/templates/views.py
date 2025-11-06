@@ -3,7 +3,7 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 
 import apps.templates.serializers as serializers
-from apps.templates.service import update_template
+from apps.templates.services import update_template
 from apps.templates.models import MessageTemplate
 
 

@@ -1,6 +1,7 @@
 from django.http import Http404
 import json
 
+import config.exceptions as exceptions
 from apps.templates.models import MessageTemplate, MessageTemplateCode
 from apps.templates.serializers import MessageTemplateSerializer, UpdateTemplateSerializer
 
@@ -16,21 +17,30 @@ def update_template(template_id: int, data: UpdateTemplateSerializer):
     template.save()
     return MessageTemplateSerializer(template)
 
-def build_verification_context(code, type_text):
-    template = MessageTemplate.objects.get(
-        code=MessageTemplateCode.EMAIL_VERIFICATION)
-    content = json.loads(template.content)
+def build_verification_context(code, type_text, limit_time):
+    template_info = __get_template_info(MessageTemplateCode.EMAIL_VERIFICATION)
 
-    context = {
-        **content,
+    template_info['context'].update({
         "code":code,
         "verificationName":type_text,
-        "limit_time": 10,
-    }
+        "limitTime": limit_time,
+    })
+
+    return template_info
+
+def __get_template_info(template_code: MessageTemplateCode):
+    try:
+        template = MessageTemplate.objects.get(code=template_code)
+    except MessageTemplate.DoesNotExist :
+        raise exceptions.TemplateNotFoundError()
+
+    try:
+        content = json.loads(template.content)
+    except json.decoder.JSONDecodeError:
+        raise exceptions.TemplateLoadError()
 
     return {
         "file_name": template.file_name,
         "subject": template.subject,
-        "context": context,
+        "context": content,
     }
-

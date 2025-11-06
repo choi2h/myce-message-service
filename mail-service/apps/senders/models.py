@@ -1,5 +1,5 @@
-from django.core.exceptions import ValidationError
 from django.db import models
+from config.exceptions import VerificationCoeNotFoundError
 
 
 class VerificationType(models.TextChoices):
@@ -13,4 +13,4 @@ def get_verification_type(type_name: str):
         if v.name == type_name:
             return v
 
-    raise ValidationError(f"Invalid verification type: {type_name}")
+    raise VerificationCoeNotFoundError()

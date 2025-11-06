@@ -20,7 +20,7 @@ def update_template(template_id: int, data: UpdateTemplateSerializer):
     template.save()
     return MessageTemplateSerializer(template)
 
-def build_verification_context(code, type_text, limit_time):
+def build_verification_context(code: str, type_text: str, limit_time: int):
     template_info = __get_template_info(MessageTemplateCode.EMAIL_VERIFICATION)
 
     template_info['context'].update({
@@ -42,6 +42,16 @@ def build_reservation_confirm_context(context_info):
         "quantity": context_info['quantity'],
         "payment_amount": context_info['payment_amount'],
         "user_type": context_info['user_type'],
+        "site_url": SITE_URL
+    })
+
+    return template_info
+
+def build_reset_password_context(temp_password: str):
+    template_info = __get_template_info(MessageTemplateCode.RESET_PASSWORD)
+
+    template_info['context'].update({
+        "temp_password": temp_password,
         "site_url": SITE_URL
     })
 

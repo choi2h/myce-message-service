@@ -12,4 +12,9 @@ urlpatterns = [
          views.ReservationConfirmMailSendView.as_view(),
          name='reservation-confirm-sender'
     ),
+    path(
+        'password/reset/',
+         views.ResetPasswordMailSendView.as_view(),
+         name='reset-password-sender'
+    ),
 ]

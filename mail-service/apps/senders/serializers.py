@@ -15,3 +15,7 @@ class ConfirmReservationSerializer(serializers.Serializer):
     quantity = serializers.IntegerField(required=True)
     payment_amount = serializers.IntegerField(required=True)
     user_type = serializers.CharField(required=True)
+
+class ResetPasswordSerializer(serializers.Serializer):
+    target_email = serializers.EmailField(required=True)
+    temp_password = serializers.CharField(required=True)
